@@ -6,7 +6,7 @@ from langchain import PromptTemplate
 with open('/Users/jasper/oai.txt', 'r') as f:
     key = f.read()
 
-llm = OpenAI(temperature=0.7, openai_api_key=key)
+llm = OpenAI(temperature=0.5, openai_api_key=key)
 
 class game:
     def __init__(self, country_name, save_path=None):
@@ -30,17 +30,18 @@ class game:
     def get_starting_state(self):
         return llm(f"Write a factual paragraph summarizing the current state of {self.country} in the year {self.year}.").strip()
 
-    def get_prompt(self):
+    def get_prompt(self, policy):
         with open('prompt_template.txt', 'r') as f:
             prompt_template = f.read()
         template = PromptTemplate(
-            input_variables=["year", "country", "state_of_the_country"],
+            input_variables=["year", "country", "state_of_the_country", "policy"],
             template=prompt_template
         )
         return template.format(
-            year=self.year,
+            year=str(self.year),
             country=self.country,
             state_of_the_country=self.state,
+            policy=policy
         )
     
     def save(self, save_path):
@@ -49,12 +50,13 @@ class game:
     
     def play(self):
         while True:
-            prompt = self.get_prompt()
-            print()
-            action = input(prompt)
+            print(self.state)
+            print("\nAs head of state, name a policy that you would like to implement. Type 'q' to quit.")
+            action = input()
             if action == 'q':
                 break
-            # self.state = llm(prompt)
+            prompt = self.get_prompt(action)
+            self.state = llm(prompt)
             self.save(self.save_path)
             self.year += 1
 

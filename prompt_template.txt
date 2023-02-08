@@ -2,3 +2,7 @@ This is a text-based game where the user will pretend to be the head of state of
 
 The year is {year}. The user is role-playing as the head of state of {country}. Here is a summary of the state of the country at this time:
 "{state_of_the_country}"
+
+As head of state, the user has chosen to implement the following policy: {policy}
+
+Determine how this will affect the country, if at all, and print a new summary of the state of the country below:
