@@ -148,6 +148,7 @@ dmypy.json
 
 # pytype static type analyzer
 .pytype/
+langchain_local/
 
 # Cython debug symbols
 cython_debug/
@@ -160,4 +161,4 @@ cython_debug/
 #.idea/
 
 data/*.html
-saves/*.txt
+saves/*.json
