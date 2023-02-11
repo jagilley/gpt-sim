@@ -1,0 +1,5 @@
+
+Based on the above description of the state of the country, evaluate on a scale of 0-100 how close the head of state is to being overthrown, where 100 represents perfect safety and 0 represents overthrowing the government.
+IMPORTANT: return your answer as an integer.
+
+Current Government Health Scale:

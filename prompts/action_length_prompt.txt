@@ -1,0 +1,12 @@
+
+Your job is to determine how long it will take to implement the following policy that the user wishes to implement.
+Use common sense and good judgement to determine a realistic duration, then return your answer in years and weeks.
+IMPORTANT: You shoud return your answer in valid JSON.
+
+EXAMPLE:
+Policy: "I wish to invest in railroads by redirecting our industrial policy."
+Duration: {example_json}
+
+The user has decided to enact the following policy.
+Policy: {policy}
+Duration:

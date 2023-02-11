@@ -1,0 +1,18 @@
+class policy:
+    def __init__(self, action, enact_year, enact_week, enactment_duration_years, enactment_duration_weeks):
+        self.action = action
+        self.enact_year = enact_year
+        self.enact_week = enact_week
+        self.enactment_duration_years = enactment_duration_years
+        self.enactment_duration_weeks = enactment_duration_weeks
+
+    def is_expired(self, year, week):
+        if year > self.enact_year + self.enactment_duration_years:
+            return True
+        elif year == self.enact_year + self.enactment_duration_years:
+            if week > self.enact_week + self.enactment_duration_weeks:
+                return True
+        return False
+
+    def __str__(self):
+        return self.action
