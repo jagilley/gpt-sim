@@ -63,6 +63,9 @@ class game:
         )
     
     def save(self, save_path):
+        # serialize all policies in active_actions to JSON
+        for i, policy in enumerate(self.state_vars['active_actions']):
+            self.state_vars['active_actions'][i] = policy.toJSON()
         with open(save_path, 'w') as f:
             json.dump(self.state_vars, f, indent=4)
 
@@ -116,10 +119,11 @@ class game:
         while True:
             print(f"{self.state_vars['year']}, Week {self.state_vars['week']}")
             print(self.state_vars['sotu'])
+            print(f"Health: {self.state_vars['health']}")
             print("\nAs head of state, name a policy that you would like to implement. Type 'q' to quit.")
 
             if not actions_list:
-                action = input()
+                action = input(prompt=">")
             else:
                 action = actions_list.pop(0)
                 print(action)
@@ -135,6 +139,10 @@ class game:
             self.state_vars['past_actions'].append(action)
             prompt = self.get_prompt(action)
             self.state_vars['sotu'] = llm(prompt).strip()
+            self.state_vars['health'] = self.get_health()
+            if self.state_vars['health'] <= 0:
+                print(f"{self.state_vars['country']} has failed! Game over")
+                break
             
             if self.state_vars['week'] == 52:
                 self.state_vars['year'] += 1

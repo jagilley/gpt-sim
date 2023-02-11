@@ -1,3 +1,5 @@
+import json
+
 class policy:
     def __init__(self, action, enact_year, enact_week, enactment_duration_years, enactment_duration_weeks):
         self.action = action
@@ -16,3 +18,12 @@ class policy:
 
     def __str__(self):
         return self.action
+
+    # serialize to JSON
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+    
+    # deserialize from JSON
+    @staticmethod
+    def fromJSON(json_string):
+        return json.loads(json_string)
