@@ -5,6 +5,11 @@ from langchain import PromptTemplate
 from policy import policy
 import json
 import os
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--country', type=str, default='Afghanistan')
+args = parser.parse_args()
 
 if os.path.exists('/Users/jasper/oai.txt'):
     with open('/Users/jasper/oai.txt', 'r') as f:
@@ -149,15 +154,16 @@ class game:
                 print(f"{self.state_vars['country']} has failed! Game over")
                 break
             
-            if self.state_vars['week'] == 52:
-                self.state_vars['year'] += 1
-                self.state_vars['week'] = 1
-            else:
-                self.state_vars['week'] += 1
+            self.state_vars['year'] += 1
+            # if self.state_vars['week'] == 52:
+            #     self.state_vars['year'] += 1
+            #     self.state_vars['week'] = 1
+            # else:
+            #     self.state_vars['week'] += 1
             
             # remove expired actions
             self.state_vars['active_actions'] = [action for action in self.state_vars['active_actions'] if not action.is_expired(self.state_vars['year'], self.state_vars['week'])]
 
 if __name__ == '__main__':
-    game = game('Afghanistan')
+    game = game(args.country)
     game.play()
