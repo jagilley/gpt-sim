@@ -1,14 +1,19 @@
 import langchain
-from langchain.llms import OpenAI
+from langchain.llms import OpenAI, OpenAIChat
 from unstructured.partition.html import partition_html
 from langchain import PromptTemplate
 from policy import policy
 import json
+import os
 
-with open('/Users/jasper/oai.txt', 'r') as f:
-    key = f.read()
+if os.path.exists('/Users/jasper/oai.txt'):
+    with open('/Users/jasper/oai.txt', 'r') as f:
+        key = f.read()
 
-llm = OpenAI(temperature=0.5, openai_api_key=key)
+    llm = OpenAIChat(temperature=0.5, openai_api_key=key)
+else:
+    # you're not Jasper! You just supply your own API key
+    llm = OpenAIChat(temperature=0.5)
 
 with open('prompts/base_prompt.txt', 'r') as f:
     base_prompt = f.read()
@@ -123,7 +128,7 @@ class game:
             print("\nAs head of state, name a policy that you would like to implement. Type 'q' to quit.")
 
             if not actions_list:
-                action = input(prompt=">")
+                action = input("> ")
             else:
                 action = actions_list.pop(0)
                 print(action)
